@@ -8,7 +8,9 @@ void print_msg(t_philo *philo, char *msg)
 	if (!philo->is_dead)
 	{
 		time = current_time() - philo->start;
+		pthread_mutex_lock(philo->print_lock);
 		printf("%ld %d %s\n", time, philo->id, msg);
+		pthread_mutex_unlock(philo->print_lock);
 	}
 	pthread_mutex_unlock(philo->dead_lock);
 }

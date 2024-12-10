@@ -6,7 +6,7 @@
 /*   By: kcisse <kcisse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:59:31 by kcisse            #+#    #+#             */
-/*   Updated: 2024/12/01 21:25:24 by kcisse           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:31:18 by kcisse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	eat_lock;
 	pthread_mutex_t	*dead_lock;
+	pthread_mutex_t	*print_lock;
 	pthread_t		p_thread;
 } t_philo;
 
@@ -53,6 +54,7 @@ typedef struct s_prog
 	long int		start;
 	long int		time_to_die;
 	pthread_mutex_t	dead_lock;
+	pthread_mutex_t	print_lock;
 	pthread_t		p_thread_m;
 	t_philo 		*philo;
 } t_prog;

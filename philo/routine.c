@@ -6,11 +6,9 @@ void *routine(void *data)
 	t_philo *philo;
 
 	philo = (t_philo *)data;
-	if((philo->nb_of_philo % 2) && philo->id % 2 && philo->id != 1)
-		usleep((philo->time_to_eat / 2));
-	else if ((philo->nb_of_philo % 2) && !(philo->id % 2))
-		usleep((philo->time_to_eat / 2) + 1);
-	else if (!(philo->nb_of_philo % 2) && !(philo->id % 2))
+	if((philo->nb_of_philo % 2) && philo->id == 1)
+		usleep(10);
+	else if (!(philo->id % 2))
 		usleep((philo->time_to_eat / 2));
 	while (1)
 	{
@@ -28,8 +26,10 @@ void *routine(void *data)
 		print_msg(philo, "is sleeping");
 		usleep(philo->time_to_sleep);
 		print_msg(philo, "is thinking");
-		// if (philo->nb_of_philo % 2)
-		usleep(1500);
+		if(philo->nb_of_philo % 2 && philo->time_to_eat > philo->time_to_sleep)
+			usleep((philo->time_to_die - (philo->time_to_eat + philo->time_to_sleep)) / 2);
+		else if(philo->time_to_eat == philo->time_to_sleep)
+		    usleep(1500);
 		pthread_mutex_lock(philo->dead_lock);
 		if (philo->is_dead)
 		{

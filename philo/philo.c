@@ -6,7 +6,7 @@
 /*   By: kcisse <kcisse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:59:20 by kcisse            #+#    #+#             */
-/*   Updated: 2024/12/10 16:28:30 by kcisse           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:39:05 by kcisse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void monitoring(t_prog *prog)
 		is_full = 0;
 		while (++j < prog->nb_of_philo)
 		{
-			pthread_mutex_lock(&prog->philo[i].eat_lock);
-			if (prog->philo[i].eaten == prog->philo[i].eat_nrb_time)
+			pthread_mutex_lock(&prog->philo[j].eat_lock);
+			if (prog->philo[j].eaten == prog->philo[j].eat_nrb_time)
 				is_full += 1;
-			pthread_mutex_unlock(&prog->philo[i].eat_lock);
+			pthread_mutex_unlock(&prog->philo[j].eat_lock);
 		}
 		if (is_full == prog->nb_of_philo)
 			break;
@@ -85,12 +85,13 @@ int main(int ac, char **av)
 
 	check_args(ac, av);
 	if (!init_struct(&prog, av, forks))
-		prog_destroyer (&prog, 1);
+		prog_destroyer(&prog, 1);
 	i = -1;
 	start = current_time();
 	while (++i < ft_atoi(av[1]))
 	{
 		prog.philo[i].dead_lock = &prog.dead_lock;
+		prog.philo[i].print_lock = &prog.print_lock;
 		prog.philo[i].start = start;
 	}
 	start_prog(prog, av);
