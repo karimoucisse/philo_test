@@ -6,27 +6,30 @@ void *routine(void *data)
 	t_philo *philo;
 
 	philo = (t_philo *)data;
-	if (((philo->id + 1) % 2) != 0)
-		usleep(1500);
-	// if((philo->nb_of_philo % 2 != 0) && (philo->id + 1) == philo->nb_of_philo)
-	// 	usleep(philo->time_to_eat / 2);
+	if((philo->nb_of_philo % 2) && philo->id % 2 && philo->id != 1)
+		usleep((philo->time_to_eat / 2));
+	else if ((philo->nb_of_philo % 2) && !(philo->id % 2))
+		usleep((philo->time_to_eat / 2) + 1);
+	else if (!(philo->nb_of_philo % 2) && !(philo->id % 2))
+		usleep((philo->time_to_eat / 2));
 	while (1)
 	{
 		take_forks(philo);
-		if(philo->nb_of_philo == 1)
+		if (philo->nb_of_philo == 1)
 			break;
 		ft_is_eating(philo);
 		pthread_mutex_lock(&philo->eat_lock);
 		if (philo->eaten == philo->eat_nrb_time)
 		{
 			pthread_mutex_unlock(&philo->eat_lock);
-			break ;
+			break;
 		}
 		pthread_mutex_unlock(&philo->eat_lock);
 		print_msg(philo, "is sleeping");
 		usleep(philo->time_to_sleep);
 		print_msg(philo, "is thinking");
-		// usleep(1500);
+		// if (philo->nb_of_philo % 2)
+		usleep(1500);
 		pthread_mutex_lock(philo->dead_lock);
 		if (philo->is_dead)
 		{
@@ -47,8 +50,17 @@ void ft_is_eating(t_philo *philo)
 	philo->eaten += 1;
 	pthread_mutex_unlock(&philo->eat_lock);
 	usleep(philo->time_to_eat);
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
+	if (philo->id % 2)
+	{
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+	}
+
 }
 
 int ft_is_dead(t_philo *philo)

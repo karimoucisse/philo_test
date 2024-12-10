@@ -6,7 +6,7 @@
 /*   By: kcisse <kcisse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:59:20 by kcisse            #+#    #+#             */
-/*   Updated: 2024/12/01 22:00:42 by kcisse           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:28:30 by kcisse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void monitoring(t_prog *prog)
 	is_full = 0;
 	while (++i < prog->nb_of_philo)
 	{
+		usleep(15);
 		j = -1;
 		is_full = 0;
 		while (++j < prog->nb_of_philo)

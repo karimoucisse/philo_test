@@ -6,7 +6,7 @@
 /*   By: kcisse <kcisse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:54:01 by kcisse            #+#    #+#             */
-/*   Updated: 2024/12/02 12:57:44 by kcisse           ###   ########.fr       */
+/*   Updated: 2024/12/10 15:38:03 by kcisse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int init_struct(t_prog *prog, char **av, pthread_mutex_t *forks)
 	prog->philo = malloc(sizeof(t_philo) * (ft_atoi(av[1])));
 	if (!prog->philo)
 		return (0);
-	// forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(av[1]));
 	if (!forks)
 		return (0);
 	i = -1;
@@ -45,7 +44,7 @@ int init_philo(char **av, t_philo **philo, pthread_mutex_t *forks)
 	{
 		if (pthread_mutex_init(&(*philo)[i].eat_lock, NULL) != 0)
 			return (0);
-		(*philo)[i].id = i;
+		(*philo)[i].id = i + 1;
 		(*philo)[i].nb_of_philo = ft_atoi(av[1]);
 		(*philo)[i].eat_bool = 0;
 		(*philo)[i].think_bool = 0;
